@@ -1,0 +1,9 @@
+{
+  "display_name": "AnkiEnhanceGUI",
+  "module_name": "anki_enhance_gui",
+  "repo_name": "anki-enhance-gui",
+  "ankiweb_id": "n/a",
+  "author": "Paul Fischer",
+  "conflicts": [],
+  "targets": ["anki21"]
+}

@@ -1,0 +1,6 @@
+{
+  "extends": ["@paulhfischer/eslint-config-javascript"],
+  "env": {
+    "browser": true
+  }
+}
