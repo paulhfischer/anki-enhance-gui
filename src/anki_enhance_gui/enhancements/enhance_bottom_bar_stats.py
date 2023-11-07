@@ -13,25 +13,25 @@ from aqt.webview import WebContent
 from bs4 import BeautifulSoup
 
 
-def _get_value_by_class(soup: BeautifulSoup, cls: str) -> int:
+def _get_value_by_class(soup: BeautifulSoup, cls: str) -> tuple[int, bool]:
     element = soup.find("span", class_=cls)
     assert element
 
-    return int(element.get_text())
+    return int(element.get_text()), bool(element.find("u"))
 
 
 def _remaining(self: Reviewer, _old: Callable[[Reviewer], str]) -> str:
     original = _old(self)
     soup = BeautifulSoup(original, "html.parser")
 
-    new_count = _get_value_by_class(soup, "new-count")
-    learn_count = _get_value_by_class(soup, "learn-count")
-    review_count = _get_value_by_class(soup, "review-count")
+    new_count, is_new = _get_value_by_class(soup, "new-count")
+    learn_count, _ = _get_value_by_class(soup, "learn-count")
+    review_count, _ = _get_value_by_class(soup, "review-count")
 
     html = f"""\
-<span id="summary-count">{new_count + learn_count + review_count}</span>
+<span id="summary-count"{' class="new-count"' if is_new else ''}>{new_count + learn_count + review_count}</span>
 <span id="detail-count" style="display: none;">{original}</span>
-"""
+"""  # noqa: E501
 
     return html
 
